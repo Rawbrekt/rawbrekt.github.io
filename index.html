@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Cryptocurrencies</title>
+   
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+   
+   </head>
+   
+   <body>
+       <section id="services" class="container">
+        <h2 class="display-4 text-center mt-5 mb-3">Cryptocurrencies</h2>
+        <div class="row text-center">
+          <div class="col-md-4 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Litecoin</h4>
+                   <p class="card-text display-4" id="LTC"></p>
+                </div>
+             </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Bitcoin</h4>
+                      <p class="card-text display-4" id="BTC"></p>
+                </div>
+             </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Ethereum</h4>
+                   <p class="card-text display-4" id="ETH"></p>
+                </div>
+             </div>
+          </div>
+        </div>
+       </section>
+
+<script>
+
+	window.onload = getLTC();
+	
+	function getLTC() {
+	
+		var coins = ["LTC","BTC","ETH"]
+		
+		for (var i = 0; i < coins.length; i++) {			
+			(function(i) {
+				var request = new XMLHttpRequest();
+				var url = "https://api.pro.coinbase.com/products/" +coins[i] + "-EUR/book"
+				console.log("url: " + url);
+				request.open('GET', url, true);			
+				console.log(request);
+				request.onreadystatechange = function() {
+					if(request.readyState == 4) {
+						var response = JSON.parse(request.responseText);
+						var price = response.bids[0][0];
+						document.getElementById(coins[i]).innerHTML = "€" + price;
+					}
+				};
+				request.send();
+			})(i);
+		}
+	}
+	setInterval (getLTC, 1000);
+</script>
+       
+       <script src="scripts/jquery.min.js"></script>
+       <script src="scripts/bootstrap.bundle.min.js"></script>
+   </body>
+</html>
