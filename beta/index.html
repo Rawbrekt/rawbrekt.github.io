@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Cryptocurrencies</title>
+   
+      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+   
+   </head>
+   
+   <body>
+       <section id="services" class="container-fluid">
+        <h2 class="display-4 text-center mt-5 mb-3">Cryptocurrencies</h2>
+        <div class="row text-center">
+          <div class="col-md-3 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Litecoin</h4>
+                   <p class="card-text display-4" id="LTC"></p>
+                   <p class="card-text" id="LTC0"></p>
+                </div>
+             </div>
+          </div>
+
+          <div class="col-md-3 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Bitcoin</h4>
+                      <p class="card-text display-4" id="BTC"></p>
+                      <p class="card-text" id="BTC0"></p>
+                </div>
+             </div>
+          </div>
+
+          <div class="col-md-3 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Ethereum</h4>
+                   <p class="card-text display-4" id="ETH"></p>
+                   <p class="card-text" id="ETH0"></p>
+                </div>
+             </div>
+          </div>
+            <div class="col-md-3 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Ripple</h4>
+                   <p class="card-text display-4" id="XRP"></p>
+                   <p class="card-text" id="XRP0"></p>
+                </div>
+             </div>
+          </div>
+        </div>
+       </section>
+        
+       <section class="container-fluid">
+       <h2 class="display-4 text-center mt-5 mb-3">Mining</h2>
+        <div class="row text-center">
+          <div class="col-md-4 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Arrow last 24h</h4>
+                   <p class="card-text display-4" id="AmountCrypto1D"></p>
+                </div>
+             </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Arrow last 7d</h4>
+                      <p class="card-text display-4" id="AmountCrypto7D"></p>
+                </div>
+             </div>
+          </div>
+
+          <div class="col-md-4 mb-4">
+             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                   <h4 class="card-title">Arrow daily average</h4>
+                   <p class="card-text display-4" id="AmountCryptoDailyAverage"></p>
+                </div>
+             </div>
+          </div>
+        </div>
+       </section>
+
+<script>
+
+	window.onload = getLoadFunctions();
+    
+    function getLoadFunctions() {
+        getLTC();
+        getMining();
+    }
+    
+    setInterval (getLTC, 1000);
+    setInterval (getMining, 60000);
+	
+	function getLTC() {
+	
+		var coins = ["LTC","BTC","ETH","XRP"]
+        var amount = ["12.2091135","0.010132","0.21405569","0"]
+		
+		for (var i = 0; i < coins.length; i++) {			
+			(function(i) {
+				var request = new XMLHttpRequest();
+				var url = "https://api.pro.coinbase.com/products/" +coins[i] + "-EUR/book"
+				console.log("url: " + url);
+				request.open('GET', url, true);			
+				console.log(request);
+				request.onreadystatechange = function() {
+					if(request.readyState == 4) {
+						var response = JSON.parse(request.responseText);
+						var price = response.bids[0][0];
+						document.getElementById(coins[i]).innerHTML = "€" + price;
+						document.getElementById(coins[i]+0).innerHTML = "€" + Math.round(price*amount[i]*100) / 100;
+					}
+				};
+				request.send();
+			})(i);
+		}
+	}
+    
+    function getMining() {
+        var url = "https://api.bitpoolmining.com/api/MinerPaymentSummary/arw?Address=as1h50hrndez5ez476lafw8kam6l07zv60529zclu9jn0zdunn9k7vv93yv5vhhz8vfguzyvlsegd3&FiatCurrencySymbol=€"
+        console.log("url: " + url);
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        console.log(request);
+        request.onreadystatechange = function() {
+                if(request.readyState == 4) {
+                var response = JSON.parse(request.responseText);
+                var AmountCrypto1D = response.AmountCrypto1D;
+                var AmountCrypto7D = response.AmountCrypto7D;
+                var AmountCryptoDailyAverage = response.AmountCryptoDailyAverage;
+                
+                document.getElementById("AmountCrypto1D").innerHTML = AmountCrypto1D;
+                document.getElementById("AmountCrypto7D").innerHTML = AmountCrypto7D;
+                document.getElementById("AmountCryptoDailyAverage").innerHTML = AmountCryptoDailyAverage;
+
+            }
+        };
+        request.send();
+    }
+</script>
+   </body>
+</html>
