@@ -110,7 +110,7 @@
 					if(request.readyState == 4) {
 						var response = JSON.parse(request.responseText);
 						var price = response.bids[0][0];
-						document.getElementById(coins[i]).innerHTML = "€" + price*2;
+						document.getElementById(coins[i]).innerHTML = "€" + price;
 					}
 				};
 				request.send();
