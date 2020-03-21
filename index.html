@@ -10,12 +10,28 @@
    
    </head>
    
-   <body>
-       <section id="services" class="container-fluid">
-        <h2 class="display-4 text-center mt-5 mb-3">Cryptocurrencies</h2>
-        <div class="row text-center">
+   <body style="background-color: #232629">
+
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+         <a class="navbar-brand" href="#">youshould.seemeca.re</a>
+        
+       
+         <div class="collapse navbar-collapse" id="navbarsExample02">
+           <ul class="navbar-nav mr-auto">
+             <li class="nav-item">
+               <a class="nav-link" href="#" onclick="ToggleCrypto();ToggleMining();">Cryptocurrencies/Mining</a>
+             </li>
+           </ul>
+          
+         </div>
+       </nav> 
+      
+
+       <section id="cryptosection" class="container-fluid">
+        <h2 class="text-white display-4 text-center mt-5 mb-3">Cryptocurrencies</h2>
+        <div class="text-white row text-center">
           <div class="col-md-3 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Litecoin</h4>
                    <p class="card-text display-4" id="LTC"></p>
@@ -24,7 +40,7 @@
           </div>
 
           <div class="col-md-3 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="text-white card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Bitcoin</h4>
                       <p class="card-text display-4" id="BTC"></p>
@@ -33,7 +49,7 @@
           </div>
 
           <div class="col-md-3 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="text-white card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Ethereum</h4>
                    <p class="card-text display-4" id="ETH"></p>
@@ -41,7 +57,7 @@
              </div>
           </div>
             <div class="col-md-3 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="text-white card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Ripple</h4>
                    <p class="card-text display-4" id="XRP"></p>
@@ -51,11 +67,11 @@
         </div>
        </section>
         
-       <section class="container-fluid">
-       <h2 class="display-4 text-center mt-5 mb-3">Mining</h2>
+       <section id=miningsection class="container-fluid">
+       <h2 class="text-white display-4 text-center mt-5 mb-3">Mining</h2>
         <div class="row text-center">
           <div class="col-md-4 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="text-white card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Arrow last 24h</h4>
                    <p class="card-text display-4" id="AmountCrypto1D"></p>
@@ -64,7 +80,7 @@
           </div>
 
           <div class="col-md-4 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="text-white card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Arrow last 7d</h4>
                       <p class="card-text display-4" id="AmountCrypto7D"></p>
@@ -73,7 +89,7 @@
           </div>
 
           <div class="col-md-4 mb-4">
-             <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+             <div class="text-white card shadow-lg p-3 mb-5 bg-dark rounded">
                 <div class="card-body">
                    <h4 class="card-title">Arrow daily average</h4>
                    <p class="card-text display-4" id="AmountCryptoDailyAverage"></p>
@@ -86,10 +102,30 @@
 <script>
 
 	window.onload = getLoadFunctions();
-    
+   
+   function ToggleMining() {
+      var x = document.getElementById("miningsection");
+      if (x.style.display === "none") {
+         x.style.display = "block";
+      } else {
+         x.style.display = "none";
+      }
+   }
+
+   function ToggleCrypto() {
+      var x = document.getElementById("cryptosection");
+      if (x.style.display === "none") {
+         x.style.display = "block";
+      } else {
+         x.style.display = "none";
+      }
+   }
+
+
     function getLoadFunctions() {
         getLTC();
         getMining();
+        ToggleMining();
     }
     
     setInterval (getLTC, 1000);
